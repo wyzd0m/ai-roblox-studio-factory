@@ -1,0 +1,15 @@
+# Normalize line endings so Windows/macOS/Linux and CI agree. Source is LF.
+* text=auto eol=lf
+
+*.luau  text eol=lf
+*.lua   text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.toml  text eol=lf
+*.yml   text eol=lf
+
+# Roblox place/model files are binary — never diff or convert them.
+*.rbxl  binary
+*.rbxlx binary
+*.rbxm  binary
+*.rbxmx binary
