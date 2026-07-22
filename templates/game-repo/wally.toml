@@ -1,0 +1,10 @@
+[package]
+name = "nick/{{GAME_SLUG_LOWER}}"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+# Add vetted packages here, e.g. a profile/data library for persistence.
+# Packages/ is gitignored; run `wally install` to fetch.
+[dependencies]
+# ProfileStore = "mad-studio/profile-store@1.4.1"

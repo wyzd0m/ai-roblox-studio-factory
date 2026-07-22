@@ -1,0 +1,22 @@
+# Build artifacts
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+build.rbxl
+*.lock
+
+# Toolchain / packages
+.rokit/
+Packages/
+ServerPackages/
+DevPackages/
+wally.lock
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+
+# Local scratch
+*.log

@@ -1,0 +1,9 @@
+std = "roblox"
+
+# Treat these as errors that must be fixed before merge.
+[rules]
+unused_variable = "warn"
+shadowing = "warn"
+global_usage = "warn"
+undefined_variable = "deny"
+multiple_statements = "warn"
