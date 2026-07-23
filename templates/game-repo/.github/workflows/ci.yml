@@ -18,7 +18,10 @@ jobs:
         run: stylua --check src/
 
       - name: Lint (Selene)
-        run: selene src/
+        run: |
+          selene src/
+          # tests/ run under Lune and carry their own selene config (config resolves from CWD).
+          cd tests && selene .
 
       - name: Run tests (Lune)
         run: |

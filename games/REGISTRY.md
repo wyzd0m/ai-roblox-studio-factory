@@ -6,6 +6,7 @@ navigable at scale and doubles as a portfolio landing page.
 | Game | Kind | Repo | Status | Published | Video |
 | ---- | ---- | ---- | ------ | --------- | ----- |
 | Claude Woodcutter | example | [Claude-Woodcutter](https://github.com/wyzd0m/Claude-Woodcutter) | release-ready | ❌ | ❌ |
+| Night Shift | comedy-horror | `Claude-NightShift` (private) | building | ❌ | ❌ |
 | _example: Claude Obby_ | obby | `Claude-Obby` | spec / building / release-ready / released | ❌ | ❌ |
 
 **Status values:** `spec` · `scaffolded` · `building` · `release-ready` · `released`.

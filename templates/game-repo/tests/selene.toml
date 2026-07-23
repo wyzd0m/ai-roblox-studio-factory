@@ -1,0 +1,9 @@
+# tests/ run under Lune, not Roblox: require() takes string paths there, which the
+# roblox std (../selene.toml) rejects. The luau std parses Luau syntax without Roblox APIs.
+# Lint from inside tests/ (`cd tests && selene .`) — selene picks config from the CWD.
+std = "luau"
+
+[rules]
+unused_variable = "warn"
+shadowing = "warn"
+undefined_variable = "deny"
