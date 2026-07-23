@@ -46,6 +46,11 @@ See [`docs/RISK_AND_LIMITATIONS.md`](docs/RISK_AND_LIMITATIONS.md) and
 
 ## Quick start (producing a game)
 
+> **Starting in a fresh chat?** Open a new Claude Code session in this folder and attach
+> [`NEW_GAME_HANDOFF.md`](NEW_GAME_HANDOFF.md) + your game idea (see
+> [`templates/GAME_IDEA_TEMPLATE.md`](templates/GAME_IDEA_TEMPLATE.md)). That one file primes the
+> session with everything below.
+
 1. Copy `templates/GAME_SPEC_TEMPLATE.md`, fill it from your idea (or let Claude expand it via
    `prompts/00-idea-to-spec.md`). **Review it.**
 2. Scaffold the repo:
