@@ -6,6 +6,10 @@
 build.rbxl
 *.lock
 
+# ...but the map is committed, Studio-editable source (M1), not a build artifact.
+# Keep .rbxmx ignored generally (stray exports / syncback temp files) and track the map:
+!/map/*.rbxmx
+
 # Toolchain / packages
 .rokit/
 Packages/

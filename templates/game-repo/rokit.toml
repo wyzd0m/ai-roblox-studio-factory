@@ -1,7 +1,7 @@
 # Pinned toolchain for {{GAME_NAME}}. Install with: rokit install
 # Bump versions in a `chore:` commit and keep CI green across the bump.
 [tools]
-rojo = "rojo-rbx/rojo@7.4.4"
+rojo = "rojo-rbx/rojo@7.7.0"
 selene = "Kampfkarren/selene@0.28.0"
 stylua = "JohnnyMorganz/StyLua@2.0.2"
 wally = "UpliftGames/wally@0.3.2"

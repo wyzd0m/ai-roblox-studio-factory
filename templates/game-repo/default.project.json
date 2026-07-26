@@ -1,5 +1,14 @@
 {
   "name": "{{GAME_NAME}}",
+  "syncbackRules": {
+    "ignorePaths": ["src", "tests"],
+    "ignoreTrees": [
+      "ReplicatedStorage/Shared",
+      "ServerScriptService/Server",
+      "StarterPlayer/StarterPlayerScripts/Client",
+      "SoundService"
+    ]
+  },
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
@@ -27,6 +36,9 @@
       "$className": "Workspace",
       "$properties": {
         "FilteringEnabled": true
+      },
+      "Map": {
+        "$path": "map/Map.rbxmx"
       }
     },
     "SoundService": {

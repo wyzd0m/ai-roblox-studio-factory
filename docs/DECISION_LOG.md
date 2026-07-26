@@ -31,4 +31,30 @@ Flamework.
 game when the spec justifies them.
 **Alternatives:** Mandate Knit everywhere — rejected as over-weight for simple games (obby).
 
+## 2026-07-26 — Maps are committed, Studio-editable `.rbxmx`, not runtime code (M1)
+
+**Decision:** The world/map ships as a committed model file `map/Map.rbxmx`, mounted by Rojo at
+`Workspace/Map`. Claude authors and edits the file directly; humans may hand-tune in Studio and capture
+edits back with the one-shot `rojo syncback` command, scoped by `syncbackRules` so only the map is
+rewritten. Default is `map.authoring = "studio-editable"` in `factory.json`; `procedural` is a manual
+opt-out.
+
+**Rationale:** Runtime-generated maps can't be fixed by a human for simple spatial issues, don't diff,
+and can drift from what was tested. Committing an editable artifact makes the map deterministic,
+diffable, and human-tunable while keeping Claude as the primary author. Verified: a scaffolded game
+builds under Rojo 7.7.0 and the map mounts at `Workspace/Map` (baseplate + SpawnLocation present in the
+built place).
+
+**Reconciles a prior principle:** `GAME_ARCHITECTURE.md` said "code is the source of truth / procedural
+models live in shared." Updated to "the **repo** is the source of truth" — committed instance artifacts
+(the map) are canonical alongside Luau; the `.rbxl` place remains the only non-canonical build artifact.
+
+**Toolchain change:** bumped the pinned Rojo from 7.4.4 → 7.7.0, because `rojo syncback` only exists in
+7.7.0+. Chose XML `.rbxmx` over binary `.rbxm` (Rojo's rbxm support is still buggy) and over runtime
+code.
+
+**Alternatives considered:** Rojo JSON model (`.model.json`) — cleaner diffs, but the syncback story is
+weaker (format mismatch on round-trip); rejected for consistency of one format across author→edit→
+syncback. Rojo *live* two-way sync — still experimental and script-only; rejected for geometry.
+
 <!-- Add new decisions above this line. -->
