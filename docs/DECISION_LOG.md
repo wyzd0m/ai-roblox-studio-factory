@@ -84,4 +84,29 @@ phone is an M2 human gate. Tokens/kit are structurally verified only.
 dependency-free and a game may adopt a framework per its spec. Per-screen ad-hoc styling — rejected as
 exactly the inconsistency this milestone removes.
 
+## 2026-07-27 — Blender model pipeline: Claude authors headless, human imports (M3)
+
+**Decision:** Add a Blender pipeline for meshes primitives can't express. Claude writes a `bpy` build
+script in `assets/blender/scripts/` and runs Blender in **background mode** to export an FBX per a
+fixed export contract; a human imports via Studio's 3D Importer and commits the MeshPart as
+`assets/meshes/<Prop>.rbxmx`. Reference images in `assets/blender/refs/` drive accuracy. Gated by
+`art.blenderPipeline` in `factory.json` (default `disabled`). Contract:
+`standards/BLENDER_PIPELINE.md`.
+
+**Rationale:** Blender being headless-runnable (`blender -b --python`) means Claude authors the mesh
+end-to-end — consistent with "use Claude to full potential, Studio as escape hatch." Only the 3D
+import isn't headless, so it's the single human step. Verified on Blender 3.2: the example script
+exports a valid ~13 KB crate FBX headlessly.
+
+**Default is `disabled` on purpose:** it adds a Blender dependency, and some games *want* procedural
+geometry. This reconciles with games like Night Shift whose frozen spec keeps NPCs as blocky rigs —
+the pipeline is opt-in and aimed at props/environment there, never forced onto NPCs.
+
+**Limitations (human-gated, can't verify headless):** import scale, orientation, shading, and whether
+the mesh *looks* right — Claude can't open the 3D Importer. Recorded in RISK_AND_LIMITATIONS.
+
+**Alternatives considered:** procedural-only geometry — kept as the default for games that want it, but
+insufficient for organic shapes; paid art assets / handcrafted Blender models — rejected per the brief
+(procedural/Claude-authored, no paid assets in v1).
+
 <!-- Add new decisions above this line. -->

@@ -108,6 +108,18 @@ loop in [`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md), and treat the firs
 game as a **human gate**: confirm the diff touches only the map before committing, and refine
 `syncbackRules` if needed. Requires Rojo ≥ 7.7.0 (pinned).
 
+## 11. Blender model import is human-gated (M3)
+
+**Problem.** M3 lets Claude author a mesh end-to-end: it writes a `bpy` script and runs Blender
+headless to export an FBX. But the **3D Import** into Studio — and therefore whether the mesh's scale,
+orientation, and shading are actually right — can't be done or verified headlessly.
+
+**Decision.** Claude owns the headless half (script + FBX export, verified by running Blender in
+background mode). The human imports via Studio's 3D Importer, confirms scale/orientation, and commits
+the MeshPart as `assets/meshes/<Prop>.rbxmx`. The pipeline is opt-in (`art.blenderPipeline`, default
+`disabled`) and requires Blender installed; a game may keep geometry procedural instead. See
+[`../standards/BLENDER_PIPELINE.md`](../standards/BLENDER_PIPELINE.md).
+
 ## What this means in practice
 
 You (the human) still only need to supply the idea and do the two things machines can't: **playtest**
