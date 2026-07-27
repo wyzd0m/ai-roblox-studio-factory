@@ -21,6 +21,9 @@ does anything yet.
   },
   "input": {
     "targets": ["desktop", "mobile"]
+  },
+  "art": {
+    "blenderPipeline": "disabled"
   }
 }
 ```
@@ -32,7 +35,7 @@ does anything yet.
 | `map.authoring` | `studio-editable` \| `procedural` | `studio-editable` | **enforced** | M1 |
 | `style.preset` | `roblox-modern-lowpoly` \| `flat-minimal` \| `custom` | `roblox-modern-lowpoly` | **enforced** | M2 |
 | `input.targets` | list of `desktop` \| `mobile` \| `console` | `[desktop, mobile]` | **enforced** | M2 |
-| `art.blenderPipeline` | `enabled` \| `disabled` | `disabled` | reserved | M3 |
+| `art.blenderPipeline` | `enabled` \| `disabled` | `disabled` | **enforced** | M3 |
 | `audio.source` | `human-sourced` \| `none` | `human-sourced` | reserved | M4 |
 | `persistence.datastore` | `enabled` \| `disabled` | `disabled` | reserved | M4 |
 
@@ -66,6 +69,20 @@ Device classes the input layer targets. Default **`[desktop, mobile]`**.
   on-screen button on phones. One binding therefore covers desktop, mobile, and console.
 - Adding `console` is already covered by the gamepad binding; the setting documents intent and is the
   place to gate device-specific chrome as games grow.
+
+## `art.blenderPipeline` (enforced, M3)
+
+Whether this game uses the Blender model pipeline. Default **`disabled`** — it adds a Blender
+dependency, and a game may deliberately keep geometry procedural.
+
+- **`enabled`:** Claude authors `bpy` scripts in `assets/blender/scripts/` and runs Blender headless
+  to export FBX; a human imports via Studio's 3D Importer and commits the mesh as
+  `assets/meshes/<Prop>.rbxmx`. Full contract:
+  [`../standards/BLENDER_PIPELINE.md`](../standards/BLENDER_PIPELINE.md).
+- **`disabled`:** geometry stays procedural / primitive; no Blender step. Legitimate art choice, not a
+  limitation (e.g. a game that wants blocky rigs on purpose).
+- The `assets/blender/` convention folder ships either way (it's just files); the setting gates
+  whether the pipeline is actually used for this game's models.
 
 ## Adding a setting
 

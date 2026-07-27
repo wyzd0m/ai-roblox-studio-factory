@@ -60,6 +60,10 @@ See [`FACTORY_SETTINGS.md`](FACTORY_SETTINGS.md) for the `factory.json` settings
 
 ```
 factory.json                    # per-game settings (see FACTORY_SETTINGS.md)
+assets/
+├── blender/                    # M3 model pipeline: refs/ scripts/ presets/ out/ (see BLENDER_PIPELINE.md)
+├── meshes/                     # committed .rbxmx MeshParts imported from Blender
+└── PROVENANCE.md               # every non-procedural asset, source, and license
 map/
 └── Map.rbxmx                   # committed, Studio-editable world; mounts at Workspace/Map
 src/
