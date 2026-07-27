@@ -200,8 +200,8 @@ session with no structured guidance.
 | M1 — Studio-editable maps | ✅ landed |
 | M2 — Native Roblox feel | ✅ landed |
 | M3 — Blender pipeline | ✅ landed |
-| M4 — Content completeness | in progress (PR open) |
-| M5 — Review loop | planned |
+| M4 — Content completeness | ✅ landed |
+| M5 — Review loop | in progress (PR open) |
 
 ---
 

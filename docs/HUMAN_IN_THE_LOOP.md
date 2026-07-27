@@ -22,7 +22,7 @@ decision by the user.
 | 7 | Build parts/GUI that can't be code-generated | 🟡 Assisted | Studio editor work. Prefer code/procedural geometry to shrink this. |
 | 8 | Lint / format / unit tests | 🟢 Automated | CI + local. |
 | 9 | Open Studio & sync with Rojo | 🟡 Assisted | Human action; Studio is not headless. |
-| 10 | **Playtest against the spec's core loop** | 🔴 Human | Claude cannot press Play or judge fun. Required gate. |
+| 10 | **Playtest against the spec's core loop** | 🔴 Human | Claude cannot press Play or judge fun. Required gate. Every handoff ships a filled `docs/PlaytestChecklist.md` (from `templates/PLAYTEST_CHECKLIST_TEMPLATE.md`). |
 | 11 | Fix playtest notes | 🟢 Automated | Claude edits code from recorded notes. |
 | 12 | Complete release checklist | 🟡 Assisted | Claude fills what it can; human verifies. |
 | 13 | Publish place / upload assets | 🔴 Human | Credentials + Roblox ToS. |
@@ -37,6 +37,10 @@ decision by the user.
   migration reduces manual work on all future games — record it as a factory improvement.
 - **Respect 🔴:** The red rows involve judgment or credentials. Never route around them, even if the
   user says "just do it" — instead prepare everything and hand off at the gate.
+- **Never claim human-only judgments:** fun, feel, balance, and tone are decided by the human at
+  playtest. The factory reports what it *can* verify (mechanical gate) and hands off a checklist for
+  the rest — it never asserts a game is "fun" or "balanced." The playtest checklist calls these out
+  explicitly so they aren't silently assumed.
 
 ## What the human actually has to do per game
 

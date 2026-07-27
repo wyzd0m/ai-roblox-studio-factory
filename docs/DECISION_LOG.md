@@ -135,4 +135,26 @@ constraint).
 and the brief bars fabricated/unlicensed assets. Raw `DataStoreService` as the default — kept a profile
 library recommendation instead for session-locking safety.
 
+## 2026-07-27 — Per-handoff playtest checklist + explicit human-only judgments (M5)
+
+**Decision:** Every playtest handoff ships a filled `docs/PlaytestChecklist.md`, generated from
+`templates/PLAYTEST_CHECKLIST_TEMPLATE.md`: concrete "do → expect" core-loop steps, per-system "try
+this / expect / try to break it" rows, security probes, feel/tuning notes (with `Config` values), and
+a dedicated **human-only judgments** section (fun / feel / balance / tone) the factory explicitly does
+not claim. Wired into `prompts/03-review-and-release.md`, `standards/PROJECT_CHECKLIST.md` (Phase 3 +
+5), and `docs/HUMAN_IN_THE_LOOP.md` (gate 10 + a "never claim fun/feel/balance" principle).
+
+**Rationale:** Claude can't press Play or judge fun, so the playtest is the load-bearing gate — but it
+was unstructured. A generated, system-mapped checklist tells the human exactly what to try and break,
+turns vague "does it work" into concrete steps, and keeps the factory honest by naming the judgments
+it must never assert.
+
+**Verified:** docs-only milestone; scaffolded game still passes `stylua`/`selene`/`rojo build`
+(no source changed). The template is a factory template (filled per game), not copied by the
+scaffolder — consistent with `GAME_SPEC_TEMPLATE.md`.
+
+**Alternatives considered:** a static one-size checklist — rejected: a checklist mapped to *this*
+game's systems is far more useful than a generic list. Auto-"scoring" fun — rejected outright: the
+brief's truthfulness rules forbid claiming judgments automation can't make.
+
 <!-- Add new decisions above this line. -->
