@@ -65,9 +65,11 @@ map/
 src/
 ├── client/
 │   ├── init.client.luau        # bootstrap: require controllers, start them
-│   └── controllers/            # per-feature client logic (input, UI, camera)
-│       ├── UIController.luau
-│       └── InputController.luau
+│   ├── controllers/            # per-feature client logic (HUD, input, camera)
+│   │   ├── HudController.luau   # builds the HUD from the UI kit
+│   │   └── InputController.luau # device-agnostic input (ContextActionService)
+│   └── ui/
+│       └── Kit.luau            # roblox-modern-lowpoly UI kit (consumes shared/Style)
 ├── server/
 │   ├── init.server.luau        # bootstrap: require services, start them
 │   └── services/               # per-feature server logic (authoritative)
@@ -76,6 +78,7 @@ src/
 └── shared/
     ├── Net.luau                # single place defining all Remotes by name
     ├── Config.luau             # tunables (speeds, prices, timers)
+    ├── Style.luau              # UI design tokens (roblox-modern-lowpoly)
     ├── Types.luau              # shared Luau type definitions
     └── util/                   # small pure helpers (no side effects)
 ```

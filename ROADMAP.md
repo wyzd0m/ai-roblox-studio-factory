@@ -198,7 +198,7 @@ session with no structured guidance.
 | Milestone | Status |
 | --- | --- |
 | M1 — Studio-editable maps | in progress (PR open) |
-| M2 — Native Roblox feel | planned |
+| M2 — Native Roblox feel | in progress (PR open) |
 | M3 — Blender pipeline | planned |
 | M4 — Content completeness | planned |
 | M5 — Review loop | planned |

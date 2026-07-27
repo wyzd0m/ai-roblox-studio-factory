@@ -57,4 +57,31 @@ code.
 weaker (format mismatch on round-trip); rejected for consistency of one format across author→edit→
 syncback. Rojo *live* two-way sync — still experimental and script-only; rejected for geometry.
 
+## 2026-07-27 — Native Roblox UI via a token module + kit, device-agnostic input (M2)
+
+**Decision:** Ship a `roblox-modern-lowpoly` design system: tokens in `src/shared/Style.luau`
+(palette, radii, thick strokes, gloss, fonts, spacing) consumed by a reusable kit in
+`src/client/ui/Kit.luau` (card, header, tile, currency pill, pill button, side-rail button). UI code
+never hardcodes a look. Input goes through `InputController.luau` using ContextActionService, which is
+device-agnostic (keyboard + gamepad + auto touch button) and covers `input.targets`. New settings
+`style.preset` and `input.targets` in `factory.json`. World counterpart: `standards/ART_DIRECTION.md`;
+visual source of truth: `standards/ui-reference/`.
+
+**Rationale:** Free-styled UI reads as "programmer output"; a token system + kit makes every screen
+look like one coherent, native Roblox game and gives Claude something to consume instead of inventing
+values per screen. Roblox is mobile-majority, so device-agnostic input is a default, not an add-on.
+Verified headlessly: scaffolded game passes `stylua --check`, `selene` (0 warnings), and `rojo build`;
+Style/Kit/HudController/InputController all mount in the tree.
+
+**Deviation from the roadmap (recorded):** the roadmap listed the UI kit "in `HudController.luau`". It
+lives in a dedicated `src/client/ui/Kit.luau` instead so the kit is reusable across controllers and
+`HudController` stays a thin consumer — consistent with "thin entry points, fat modules".
+
+**Limitation:** the *visual* result can't be verified headlessly (no Studio); rendering on desktop +
+phone is an M2 human gate. Tokens/kit are structurally verified only.
+
+**Alternatives considered:** a UI framework (Fusion/Roact) — rejected for v1 as over-weight; the kit is
+dependency-free and a game may adopt a framework per its spec. Per-screen ad-hoc styling — rejected as
+exactly the inconsistency this milestone removes.
+
 <!-- Add new decisions above this line. -->
