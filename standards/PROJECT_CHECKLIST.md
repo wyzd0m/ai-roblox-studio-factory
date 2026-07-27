@@ -19,6 +19,7 @@ Track a game from scaffold to release-ready. Copy into the game's `docs/` or a G
 ## Phase 3 — Core loop
 - [ ] Core loop implemented server-authoritative.
 - [ ] Unit tests for pure logic pass; lint/format clean.
+- [ ] Playtest handoff generated (`docs/PlaytestChecklist.md` from the template).
 - [ ] **First human playtest of the core loop done.**
 
 ## Phase 4 — Systems
@@ -27,7 +28,7 @@ Track a game from scaffold to release-ready. Copy into the game's `docs/` or a G
 
 ## Phase 5 — Polish
 - [ ] Placeholder → procedural assets improved.
-- [ ] Tuned from playtest notes.
+- [ ] Fresh playtest handoff generated; tuned from its recorded notes.
 
 ## Phase 6 — Release-ready
 - [ ] `DEFINITION_OF_DONE.md` mechanical + experience gates pass.
