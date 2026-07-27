@@ -61,6 +61,7 @@ See [`FACTORY_SETTINGS.md`](FACTORY_SETTINGS.md) for the `factory.json` settings
 ```
 factory.json                    # per-game settings (see FACTORY_SETTINGS.md)
 assets/
+├── audio/                      # audio/PROVENANCE.md — human-sourced SoundIds + licenses (M4)
 ├── blender/                    # M3 model pipeline: refs/ scripts/ presets/ out/ (see BLENDER_PIPELINE.md)
 ├── meshes/                     # committed .rbxmx MeshParts imported from Blender
 └── PROVENANCE.md               # every non-procedural asset, source, and license
@@ -81,6 +82,7 @@ src/
 │       └── GameplayService.luau
 └── shared/
     ├── Net.luau                # single place defining all Remotes by name
+    ├── Audio.luau              # single place naming SoundIds (human-sourced)
     ├── Config.luau             # tunables (speeds, prices, timers)
     ├── Style.luau              # UI design tokens (roblox-modern-lowpoly)
     ├── Types.luau              # shared Luau type definitions
@@ -108,10 +110,14 @@ return Net
 
 ## Persistence
 
+- Enabled per-game via `persistence.datastore` in `factory.json` (default `disabled`).
 - Use a vetted profile library (e.g. ProfileService/ProfileStore via Wally) rather than raw
   `DataStoreService`, to get session-locking and reduce data-loss bugs.
 - Never trust client-reported balances; the server reconciles against the stored profile.
 - Guard all DataStore calls with `pcall` and a documented retry/backoff policy.
+- **Testing (human):** DataStore needs *Studio → Game Settings → Security → "Enable Studio Access to
+  API Services"*; verify save/load across rejoin. Not headless-verifiable — it's a Definition-of-Done
+  gate, not a CI check.
 
 ## Lifecycle pattern (lightweight, no heavy framework required)
 

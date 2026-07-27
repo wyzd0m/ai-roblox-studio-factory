@@ -109,4 +109,30 @@ the mesh *looks* right — Claude can't open the 3D Importer. Recorded in RISK_A
 insufficient for organic shapes; paid art assets / handcrafted Blender models — rejected per the brief
 (procedural/Claude-authored, no paid assets in v1).
 
+## 2026-07-27 — Content completeness: audio registry, DataStore gate, physics tuning (M4)
+
+**Decision:** Close the "works but incomplete" gaps. **Audio:** a single registry `src/shared/Audio.luau`
+(names → SoundIds, `Audio.get` warns on unset) + `assets/audio/PROVENANCE.md`; audio is human-sourced
+(`audio.source`, default `human-sourced`). **Persistence:** `persistence.datastore` setting (default
+`disabled`) with a documented human test step (enable Studio Access to API Services, verify save/load
+across rejoin). **Physics/collision tuning:** added explicit human-gated items to
+`DEFINITION_OF_DONE.md` (CanCollide/hitboxes, WalkSpeed/Jump, interaction ranges) — all tunable via
+`Config.luau`.
+
+**Rationale:** These are the things a mechanical (CI) gate can't catch but that make a game feel
+finished. Audio and DataStore correctness are inherently human/licensing/Studio concerns; naming them
+as explicit gates (not silent assumptions) keeps the factory honest and the DoD complete. The audio
+registry mirrors the existing `Net.luau` "single audit surface" pattern.
+
+**Verified headlessly:** scaffolded game passes `stylua --check`, `selene` (0 warnings), `rojo build`;
+`Audio.luau` mounts under `ReplicatedStorage/Shared`; `factory.json` parses with the two new keys.
+
+**Limitation:** DataStore save/load and physics feel can't be verified headlessly — both are
+Definition-of-Done human gates (recorded in RISK_AND_LIMITATIONS as the general "Studio not headless"
+constraint).
+
+**Alternatives considered:** auto-sourcing audio (generate/upload) — rejected: licensing + ToS risk,
+and the brief bars fabricated/unlicensed assets. Raw `DataStoreService` as the default — kept a profile
+library recommendation instead for session-locking safety.
+
 <!-- Add new decisions above this line. -->
