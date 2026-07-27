@@ -12,5 +12,11 @@
   },
   "art": {
     "blenderPipeline": "disabled"
+  },
+  "audio": {
+    "source": "human-sourced"
+  },
+  "persistence": {
+    "datastore": "disabled"
   }
 }

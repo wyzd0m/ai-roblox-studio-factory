@@ -24,6 +24,12 @@ does anything yet.
   },
   "art": {
     "blenderPipeline": "disabled"
+  },
+  "audio": {
+    "source": "human-sourced"
+  },
+  "persistence": {
+    "datastore": "disabled"
   }
 }
 ```
@@ -36,8 +42,8 @@ does anything yet.
 | `style.preset` | `roblox-modern-lowpoly` \| `flat-minimal` \| `custom` | `roblox-modern-lowpoly` | **enforced** | M2 |
 | `input.targets` | list of `desktop` \| `mobile` \| `console` | `[desktop, mobile]` | **enforced** | M2 |
 | `art.blenderPipeline` | `enabled` \| `disabled` | `disabled` | **enforced** | M3 |
-| `audio.source` | `human-sourced` \| `none` | `human-sourced` | reserved | M4 |
-| `persistence.datastore` | `enabled` \| `disabled` | `disabled` | reserved | M4 |
+| `audio.source` | `human-sourced` \| `none` | `human-sourced` | **enforced** | M4 |
+| `persistence.datastore` | `enabled` \| `disabled` | `disabled` | **enforced** | M4 |
 
 ## `map.authoring` (enforced, M1)
 
@@ -83,6 +89,26 @@ dependency, and a game may deliberately keep geometry procedural.
   limitation (e.g. a game that wants blocky rigs on purpose).
 - The `assets/blender/` convention folder ships either way (it's just files); the setting gates
   whether the pipeline is actually used for this game's models.
+
+## `audio.source` (enforced, M4)
+
+How audio is sourced. Default **`human-sourced`**.
+
+- **`human-sourced`:** sounds are registered by name in `src/shared/Audio.luau` and sourced by a human
+  from Roblox's free/licensed audio library, recorded in `assets/audio/PROVENANCE.md`. Claude never
+  fabricates or uploads audio. This is the honest default — audio is a licensing decision.
+- **`none`:** the game ships silent (Audio registry present but empty). Legitimate for a prototype.
+
+## `persistence.datastore` (enforced, M4)
+
+Whether the game persists player data. Default **`disabled`**.
+
+- **`enabled`:** use a vetted profile library over raw `DataStoreService` (see
+  [`GAME_ARCHITECTURE.md`](GAME_ARCHITECTURE.md) → *Persistence*). **Testing requires a human** to
+  enable *Studio → Game Settings → Security → "Enable Studio Access to API Services"* and verify
+  save/load across rejoin — it can't be checked headlessly. Tracked in
+  [`DEFINITION_OF_DONE.md`](DEFINITION_OF_DONE.md).
+- **`disabled`:** no persistence; nothing is saved between sessions.
 
 ## Adding a setting
 

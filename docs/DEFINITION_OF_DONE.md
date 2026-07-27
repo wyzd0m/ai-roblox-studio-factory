@@ -15,9 +15,18 @@ gate is a human playtest. Neither substitutes for the other.
 ## Experience gate (human playtest)
 - [ ] The spec's **core loop** is playable start to finish.
 - [ ] Win/lose (or progression) conditions from the spec trigger correctly.
-- [ ] Save/load persists across rejoin (if the game has persistence).
 - [ ] No exploit obvious in 10 minutes (client can't grant itself currency/progress).
 - [ ] Playtest notes recorded in `docs/DevelopmentLog.md`; blocking notes fixed.
+
+### Content & tuning (human — can't be verified headlessly)
+- [ ] **Collision & hitboxes:** `CanCollide` correct on every part; interaction ranges /
+      `ProximityPrompt` distances feel right; no walk-through or invisible-wall surprises.
+- [ ] **Character physics:** `WalkSpeed`, `JumpPower`/`JumpHeight` tuned to the spec's intended feel
+      (all such values live in `Config.luau` so retuning is one line).
+- [ ] **Audio:** every sound in `shared/Audio.luau` has a sourced SoundId, or the game is intentionally
+      silent (`audio.source = none`); provenance recorded in `assets/audio/PROVENANCE.md`.
+- [ ] **Persistence (if `persistence.datastore = enabled`):** enable *Studio → Game Settings →
+      Security → "Enable Studio Access to API Services"*, then confirm save/load persists across rejoin.
 
 ## Repository gate (portfolio quality)
 - [ ] README complete: overview, features, tech, structure, install, Rojo sync, screenshots
