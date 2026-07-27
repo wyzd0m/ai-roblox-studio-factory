@@ -3,5 +3,11 @@
   "schemaVersion": 1,
   "map": {
     "authoring": "studio-editable"
+  },
+  "style": {
+    "preset": "roblox-modern-lowpoly"
+  },
+  "input": {
+    "targets": ["desktop", "mobile"]
   }
 }
