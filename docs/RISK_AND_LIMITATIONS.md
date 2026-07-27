@@ -95,6 +95,19 @@ If a requested concept appears to violate platform policy, say so before buildin
 `docs/DevelopmentLog.md`. Recurring problems are fixed **in the factory template**, not just in the
 one game — so the fix compounds.
 
+## 10. Committed-map syncback is human-verified, not headless-testable
+
+**Problem.** M1 makes the map a committed `map/Map.rbxmx` that a human can hand-tune in Studio and
+capture back with `rojo syncback`. Claude can verify the *forward* direction headlessly (the map
+builds and mounts at `Workspace/Map` via `rojo build`/`sourcemap`), but the *round-trip* — edit in
+Studio → save place → `syncback` writes only `map/Map.rbxmx` — depends on a running Studio session
+and cannot be confirmed without a human.
+
+**Decision.** Ship the mechanism with `syncbackRules` scoped to protect `src/`/`tests/`, document the
+loop in [`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md), and treat the first syncback in a new
+game as a **human gate**: confirm the diff touches only the map before committing, and refine
+`syncbackRules` if needed. Requires Rojo ≥ 7.7.0 (pinned).
+
 ## What this means in practice
 
 You (the human) still only need to supply the idea and do the two things machines can't: **playtest**
