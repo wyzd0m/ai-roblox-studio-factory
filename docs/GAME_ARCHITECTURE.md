@@ -6,8 +6,10 @@ a reviewer or employer can open any repo and immediately know where things live.
 
 ## Guiding principles
 
-1. **Code is the source of truth.** The Roblox place is a build artifact produced by Rojo from
-   `src/`. Never treat a `.rbxl` as canonical.
+1. **The repo is the source of truth.** Everything canonical lives in version control: Luau in `src/`
+   **and** committed instance artifacts such as the map (`map/Map.rbxmx`). The Roblox place (`.rbxl`)
+   is only a build artifact produced by Rojo — never treat it as canonical. (Hand-tunable *world
+   geometry* is a committed model file rather than runtime code; see **Map authoring** below.)
 2. **Three realms, cleanly separated:** `client`, `server`, `shared`. Trust nothing from the client.
 3. **Thin entry points, fat modules.** `Script`/`LocalScript` files only bootstrap; all logic lives
    in reusable `ModuleScript`s.
@@ -25,14 +27,41 @@ a reviewer or employer can open any repo and immediately know where things live.
 | `src/client/` | `StarterPlayer/StarterPlayerScripts` | Each player's client |
 | `src/server/` | `ServerScriptService` | Server only |
 | `src/shared/` | `ReplicatedStorage/Shared` | Both realms (modules) |
+| `map/Map.rbxmx` | `Workspace/Map` | Server-authored, replicated to clients |
 | `src/assets/`* | `ReplicatedStorage/Assets` (optional) | Both |
 
-\* Code-buildable assets (procedural models built by a ModuleScript) live in `shared`; binary
-assets are referenced by ID and listed in `docs/` with provenance.
+\* Binary assets (meshes, imported models) are referenced by ID and listed in `docs/` with provenance.
+Small procedural props may still be built by a ModuleScript in `shared`, but **hand-tunable world
+geometry — the map — is a committed model file** (`map/Map.rbxmx`), not runtime code (see below).
+
+## Map authoring
+
+The world/map is a **committed, Studio-editable model file** — not code that builds geometry at
+runtime. This is deliberate: a human must be able to fix simple spatial problems (an aisle too narrow,
+props too close) in seconds, maps must diff cleanly in git, and a built place must be deterministic
+across runs.
+
+- **Default (`map.authoring = "studio-editable"`).** The map lives at `map/Map.rbxmx` (Roblox XML —
+  chosen over binary `.rbxm`, whose Rojo support is still buggy, and over runtime code). Rojo mounts it
+  at `Workspace/Map`. The seed ships a baseplate + `SpawnLocation`; Claude grows it by editing the file
+  directly (the primary authoring path).
+- **Studio is an escape hatch, not the workflow.** When a human wants to nudge geometry by hand, they
+  edit `Workspace.Map` live in Studio and capture the result back to `map/Map.rbxmx` with
+  **`rojo syncback`** (requires Rojo ≥ 7.7.0, pinned in `rokit.toml`). The edit→syncback loop is
+  documented in [`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md). `syncbackRules` in
+  `default.project.json` scope syncback to the map and protect `src/` from being overwritten.
+- **Procedural opt-out (`map.authoring = "procedural"`).** A game that genuinely wants a code-built map
+  removes the `Workspace/Map` mount and builds geometry from a server module. Recorded in that game's
+  decision log. (The scaffolder ships studio-editable by default; procedural is a manual opt-out.)
+
+See [`FACTORY_SETTINGS.md`](FACTORY_SETTINGS.md) for the `factory.json` settings model.
 
 ## Reference folder layout inside a game
 
 ```
+factory.json                    # per-game settings (see FACTORY_SETTINGS.md)
+map/
+└── Map.rbxmx                   # committed, Studio-editable world; mounts at Workspace/Map
 src/
 ├── client/
 │   ├── init.client.luau        # bootstrap: require controllers, start them

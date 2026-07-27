@@ -1,0 +1,7 @@
+{
+  "$doc": "Per-game factory settings. See docs/FACTORY_SETTINGS.md in the factory for the full model. Only keys documented as enforced take effect today.",
+  "schemaVersion": 1,
+  "map": {
+    "authoring": "studio-editable"
+  }
+}

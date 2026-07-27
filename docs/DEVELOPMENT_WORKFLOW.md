@@ -65,6 +65,30 @@ docs: architecture + development log
 chore: release v0.1.0
 ```
 
+## Editing the map (studio-editable loop)
+
+The map is a committed model file at `map/Map.rbxmx` mounted at `Workspace/Map` (see
+[`GAME_ARCHITECTURE.md`](GAME_ARCHITECTURE.md) → *Map authoring*). Two ways it changes:
+
+- **Claude authors/edits the file directly.** This is the primary path — Claude regenerates or edits
+  `map/Map.rbxmx`, keeping `rojo build` green. No Studio round-trip needed.
+- **Human quick-tune in Studio (the escape hatch).** When you want to nudge geometry by hand:
+  1. `rojo serve` and connect Studio via the Rojo plugin — the map appears at `Workspace.Map`.
+  2. Edit geometry under the `Map` model in Studio (move/resize/add parts).
+  3. Save the place to a file (Studio → *File → Save to File…*, e.g. `edited.rbxl`).
+  4. Capture edits back into the repo:
+     ```bash
+     rojo syncback default.project.json --input edited.rbxl
+     ```
+     `syncbackRules` in `default.project.json` scope this to `Workspace/Map` and protect `src/` and
+     `tests/`, so only `map/Map.rbxmx` is rewritten.
+  5. Review the diff and commit: `git add map/Map.rbxmx && git commit -m "feat: tune map layout"`.
+
+**Requirements & notes.** Syncback needs **Rojo ≥ 7.7.0** (pinned in `rokit.toml`). Rojo's *live*
+two-way sync is still experimental and script-only — do **not** rely on it for geometry; use the
+one-shot `syncback` command above. On first use in a new game, confirm the syncback diff touches only
+`map/Map.rbxmx` before committing, and refine `syncbackRules` if anything else appears.
+
 ## Definition of "phase complete"
 
 A phase is complete only when: its checks pass, its changes are committed, its docs are updated, and
