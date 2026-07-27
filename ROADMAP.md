@@ -201,7 +201,7 @@ session with no structured guidance.
 | M2 — Native Roblox feel | ✅ landed |
 | M3 — Blender pipeline | ✅ landed |
 | M4 — Content completeness | ✅ landed |
-| M5 — Review loop | in progress (PR open) |
+| M5 — Review loop | ✅ landed |
 
 ---
 
